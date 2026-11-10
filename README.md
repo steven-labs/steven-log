@@ -5,7 +5,7 @@ AI에 대한 생각과 소프트웨어 개발 기록을 위한 개인 블로그.
 - 운영 예정 주소: https://steven-log.home201.com
 - Astro + TypeScript + MDX, 정적 빌드
 - 하늘색 포인트와 글 중심의 미니멀 UI
-- 댓글: Giscus (연결 전)
+- 댓글: Giscus (동일 공개 저장소의 Discussions에 연결)
 - 배포 목표: Docker → Zot → infra Kustomize → ArgoCD. Vercel 사용 안 함.
 - 별도 상시 dev 배포 환경 없이 로컬 + 운영으로 구성
 
@@ -32,11 +32,14 @@ npm run preview
 
 ## Giscus
 
-공개 GitHub 저장소의 Discussions와 Giscus 앱 설치가 필요하다.
-코드 저장소는 현재 비공개다. 댓글 전용 공개 저장소를 쓰거나 소스 공개 여부를 결정한 후 연결한다.
-`.env.example`을 `.env`로 복사하고 giscus.app에서 얻은 공개 설정값을 입력한다.
-설정 전에는 운영 페이지에 동작하지 않는 댓글 UI를 노출하지 않는다.
-Docker 빌드에는 같은 이름의 `--build-arg`를 전달한다. 공개 설정값이며 인증 토큰을 넣지 않는다.
+`steven-labs/steven-log`는 공개 저장소이며 Giscus 앱 설치와 Discussions 활성화를 완료했다.
+댓글은 `Announcements` 카테고리에 저장하고 글의 pathname으로 연결한다.
+공개 식별자는 `src/config/giscus.ts`에 있으므로 기본 빌드·Docker 빌드에 별도 시크릿이나 환경변수가 필요 없다.
+필요하면 `.env.example`에 있는 `PUBLIC_GISCUS_*` 값으로 재정의할 수 있다.
+Docker 재정의는 같은 이름의 `--build-arg`로 전달한다. 공개 식별자이며 인증 토큰을 넣지 않는다.
+초안에는 댓글 창을 표시하지 않는다. 댓글 쓰기는 GitHub 로그인이 필요하다.
+글 URL을 바꾸면 연결되는 토론도 달라지므로 발행 후 slug는 유지한다.
+운영 미배포 상태라 운영 도메인에서의 실제 댓글 작성은 아직 검증하지 않았다.
 
 ## 운영 배포 (아직 미연결)
 
@@ -49,7 +52,6 @@ infra 접근이 없어 K8s manifest·Ingress·TLS·CI 자격증명은 아직 확
 
 - UI 세부 조정 및 검색·다크 모드 추가 검토
 - 작성자 소개 문구 검토, 첫 실제 글 작성
-- Giscus 공개 Discussions 저장소·앱 설치·설정
 - infra 접근 복구 후 manifests/Ingress/TLS와 릴리스 파이프라인 연결
 - 운영 주소에서 실제 렌더링·댓글 확인
 
@@ -59,7 +61,8 @@ infra 접근이 없어 K8s manifest·Ingress·TLS·CI 자격증명은 아직 확
 - 로컬 Chromium에서 1440/390/320px, 홈·글·소개 9개 조합 HTTP 200 및 가로 넘침 없음
 - 데스크톱/모바일 홈 스크린샷 육안 확인
 - 초안의 운영 HTML·RSS·사이트맵 제외 확인
-- Docker 실제 빌드·운영 배포·Giscus 동작은 미검증
+- 로컬 Chromium에서 Giscus iframe의 댓글 0개·GitHub 로그인 UI 로드 및 페이지 오류 없음 확인 (댓글 게시하지 않음)
+- Docker 실제 빌드·운영 배포·운영 댓글 작성은 미검증
 
 ## Actions 실행 정책
 
