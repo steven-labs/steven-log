@@ -60,3 +60,11 @@ infra 접근이 없어 K8s manifest·Ingress·TLS·CI 자격증명은 아직 확
 - 데스크톱/모바일 홈 스크린샷 육안 확인
 - 초안의 운영 HTML·RSS·사이트맵 제외 확인
 - Docker 실제 빌드·운영 배포·Giscus 동작은 미검증
+
+## Actions 실행 정책
+
+- main 푸시, main 대상 내부 PR, main 수동 실행에서 빌드를 검증한다.
+- 내부 PR은 이 저장소 브랜치에서 열린 PR이다. 외부 포크 PR은 job 조건에서 제외해 러너·빌드 단계를 실행하지 않는다. GitHub에 skipped 워크플로 기록은 나타날 수 있다.
+- 팀 구성원이라도 개인 포크에서 보낸 PR은 외부 포크로 취급한다.
+- pull_request_target은 사용하지 않는다. 검증에 배포용 시크릿을 전달하지 않는다.
+- GITHUB_TOKEN은 contents: read이며 checkout 인증 정보를 후속 명령에 남기지 않는다.
