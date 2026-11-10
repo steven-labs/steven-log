@@ -1,0 +1,20 @@
+---
+import Base from '../layouts/Base.astro';
+import { getPosts, formatDate } from '../lib/posts';
+const posts = await getPosts();
+---
+<Base>
+  <section class="intro">
+    <p class="eyebrow"><span class="status-dot"></span> A PERSONAL LOG BY STEVEN LEE</p>
+    <h1>생각을 기록하고,<br /><span>더 나은 것을 만듭니다.</span></h1>
+    <p class="intro-copy">AI와 소프트웨어, 그리고 만드는 사람의 생각.<br />매일의 질문과 배움을 이곳에 남깁니다.</p>
+  </section>
+  <section class="feed" aria-labelledby="feed-title">
+    <div class="feed-header"><h2 id="feed-title">기록들 <span class="count">{posts.length}</span></h2><span class="feed-caption">생각과 기술, 차곡차곡.</span></div>
+    {import.meta.env.DEV && <p class="dev-note">개발 미리보기 · 초안은 운영 빌드에서 제외됩니다.</p>}
+    <div class="post-list">
+      {posts.map(post => <article class="post-row"><div class="post-meta"><time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time><span>{post.data.category}</span>{post.data.draft && <span class="draft-label">초안</span>}</div><h3><a href={`/posts/${post.id}/`}>{post.data.title}<span class="post-arrow" aria-hidden="true">↗</span></a></h3><p>{post.data.description}</p><div class="tags">{post.data.tags.map(tag => <span>#{tag}</span>)}</div></article>)}
+      {!posts.length && <div class="empty-state"><span class="empty-mark" aria-hidden="true">✳</span><h3>첫 번째 기록을 준비하고 있습니다.</h3><p>AI에 대한 생각과 개발 이야기가 곧 이곳에 쌓입니다.</p></div>}
+    </div>
+  </section>
+</Base>

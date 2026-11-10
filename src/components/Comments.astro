@@ -1,0 +1,22 @@
+---
+const repo = import.meta.env.PUBLIC_GISCUS_REPO;
+const repoId = import.meta.env.PUBLIC_GISCUS_REPO_ID;
+const category = import.meta.env.PUBLIC_GISCUS_CATEGORY;
+const categoryId = import.meta.env.PUBLIC_GISCUS_CATEGORY_ID;
+const configured = repo && repoId && category && categoryId;
+---
+{configured && <section class="comments" aria-label="댓글"><h2>이야기를 나눠요</h2><p>GitHub 계정으로 생각을 남길 수 있습니다.</p><div class="giscus" data-repo={repo} data-repo-id={repoId} data-category={category} data-category-id={categoryId}></div></section>}
+{!configured && import.meta.env.DEV && <p class="dev-note">Giscus 연결 전입니다. 공개 Discussions 저장소와 앱 설치 후 .env를 설정하세요.</p>}
+<script>
+  const container = document.querySelector<HTMLElement>('.giscus');
+  if (container) {
+    const script = document.createElement('script');
+    script.src = 'https://giscus.app/client.js';
+    for (const key of ['repo', 'repoId', 'category', 'categoryId'] as const) {
+      script.dataset[key] = container.dataset[key];
+    }
+    Object.assign(script.dataset, { mapping: 'pathname', strict: '1', reactionsEnabled: '1', emitMetadata: '0', inputPosition: 'top', theme: 'light', lang: 'ko', loading: 'lazy' });
+    script.crossOrigin = 'anonymous'; script.async = true;
+    container.appendChild(script);
+  }
+</script>
