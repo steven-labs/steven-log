@@ -41,18 +41,23 @@ Docker 재정의는 같은 이름의 `--build-arg`로 전달한다. 공개 식�
 글 URL을 바꾸면 연결되는 토론도 달라지므로 발행 후 slug는 유지한다.
 운영 미배포 상태라 운영 도메인에서의 실제 댓글 작성은 아직 검증하지 않았다.
 
-## 운영 배포 (아직 미연결)
+## 운영 배포
 
-`docker/Dockerfile`로 정적 사이트를 빌드하고 비루트 Nginx의 8080 포트에서 제공한다.
-`/healthz`는 프로브용이다. release 태그 기반 Zot 푸시와 infra 갱신은 기존 home201 패턴을 따른다.
-infra 접근이 없어 K8s manifest·Ingress·TLS·CI 자격증명은 아직 확인/적용하지 않았다.
-현재 GitHub Actions는 빌드 검증만 수행하며 자동 운영 배포하지 않는다.
+`release-X.Y.Z` 태그를 main에 포함된 커밋에 붙이면 GitHub Actions가 Docker 빌드를 검증하고
+`registry.home201.com/steven-log:X.Y.Z` 이미지를 푸시한 뒤 `steven-labs/infra`의
+`k8s/apps/home201/overlays/prod/kustomization.yaml`에서 steven-log 이미지 태그만 갱신한다.
+ZOT_USER/ZOT_PASS/INFRA_DEPLOY_KEY는 조직 공통 Actions secrets를 사용한다.
+태그 재사용 대신 새 버전을 발행한다. rollback은 해당 GitOps 이미지 태그를 이전 검증 버전으로 되돌린다.
+
+ArgoCD home201 Application이 블로그의 별도 Deployment/Service/Ingress를 함께 관리한다.
+네임스페이스 home201의 기존 regcred를 재사용하며 기존 홈페이지 리소스는 바꾸지 않는다.
+별도 데이터 볼륨 없음. 비루트 Nginx 8080, /healthz probe, cert-manager/Traefik HTTPS 사용.
+운영 배포 성공은 CI 완료만으로 판단하지 말고 실제 운영 주소에서 확인한다.
 
 ## 다음 작업
 
 - UI 세부 조정 및 검색·다크 모드 추가 검토
 - 작성자 소개 문구 검토, 첫 실제 글 작성
-- infra 접근 복구 후 manifests/Ingress/TLS와 릴리스 파이프라인 연결
 - 운영 주소에서 실제 렌더링·댓글 확인
 
 ## 초기 검증
