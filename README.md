@@ -46,6 +46,13 @@ Google Search Console은 Steven이 등록 완료했다고 확인했다(2026-11-1
 사이트맵 제출 여부와 URL 검사·색인 현황은 콘솔에서 확인해야 한다.
 제출 주소: `https://steven-log.home201.com/sitemap-index.xml`.
 
+텍스트 대안: `https://steven-log.home201.com/sitemap.txt`.
+`src/pages/sitemap.txt.ts`에서 홈·소개·공개 글의 절대 URL을 한 줄씩 생성한다.
+초안·미래 날짜 글은 개발 모드에서도 텍스트 사이트맵에서 제외한다.
+`robots.txt`는 모든 크롤러에 공개 경로 접근을 허용하고 텍스트·XML 사이트맵을 함께 안내한다.
+서치콘솔에는 `sitemap.txt`를 추가 제출해 실제 수집 결과를 확인한다.
+파일의 HTTP 200 응답만으로 Google의 수집·색인 성공을 판단하지 않는다.
+
 초안은 `draft: true`. 개발 서버에서만 표시하고 운영 빌드·RSS·사이트맵에서 제외한다.
 미래 날짜 글도 운영 빌드에서 제외하며, 날짜가 되어도 자동 발행되지 않는다. 재빌드·배포가 필요하다.
 `preview.mdx`는 화면 검증용이며 Steven의 실제 글이 아니다.

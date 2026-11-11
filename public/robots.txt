@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
+Sitemap: https://steven-log.home201.com/sitemap.txt
 Sitemap: https://steven-log.home201.com/sitemap-index.xml
