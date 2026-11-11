@@ -26,6 +26,26 @@ npm run preview
 필수 메타데이터: `title`, `description`, `date`, `category` (`생각` 또는 `기술`).
 선택: `tags`, `draft`. 날짜는 `YYYY-MM-DD` 또는 시간대가 있는 ISO 형식.
 
+### 검색·공유 메타데이터
+
+본문과 화면 제목은 유지하면서 `seoTitle`, `seoDescription`으로 검색용 정보를 별도 지정할 수 있다.
+미지정 시 기존 `title`, `description`을 사용한다. 검색엔진이 실제 검색 결과의 제목·설명을 재작성할 수 있다.
+
+```yaml
+seoTitle: "글 제목 — 검색자가 알 수 있는 구체적 주제"
+seoDescription: "실제 본문을 설명하는 간결한 요약"
+socialImage: "../../assets/posts/example.png"
+socialImageAlt: "이미지 내용 설명"
+```
+
+`socialImage`는 해당 글 기준 로컬 이미지 경로다. 공유용 JPEG를 폭 1200px로 생성하고 OG·Twitter 메타데이터와 BlogPosting JSON-LD에 사용한다.
+글에는 작성자·발행일·언어·대표 URL을 자동 포함한다. 실질적으로 내용을 수정한 경우에만 선택 필드 `updated`를 명시한다(빌드 시각으로 날짜를 갱신하지 않는다).
+초안·404에는 구조화 데이터를 출력하지 않는다. 공개 글만 운영 HTML·RSS·사이트맵에 포함된다.
+
+Google Search Console은 Steven이 등록 완료했다고 확인했다(2026-11-11).
+사이트맵 제출 여부와 URL 검사·색인 현황은 콘솔에서 확인해야 한다.
+제출 주소: `https://steven-log.home201.com/sitemap-index.xml`.
+
 초안은 `draft: true`. 개발 서버에서만 표시하고 운영 빌드·RSS·사이트맵에서 제외한다.
 미래 날짜 글도 운영 빌드에서 제외하며, 날짜가 되어도 자동 발행되지 않는다. 재빌드·배포가 필요하다.
 `preview.mdx`는 화면 검증용이며 Steven의 실제 글이 아니다.

@@ -1,13 +1,16 @@
 ---
 import { render } from 'astro:content';
+import { getImage } from 'astro:assets';
 import Base from '../../layouts/Base.astro';
 import Comments from '../../components/Comments.astro';
 import { getPosts, formatDate } from '../../lib/posts';
 export async function getStaticPaths() { return (await getPosts()).map(post => ({ params: { id: post.id }, props: { post } })); }
 const { post } = Astro.props;
 const { Content, headings } = await render(post);
+const social = post.data.socialImage ? await getImage({ src: post.data.socialImage, width: 1200, format: 'jpeg', quality: 80 }) : undefined;
+const image = social ? { url: new URL(social.src, Astro.site).href, width: Number(social.attributes.width), height: Number(social.attributes.height), alt: post.data.socialImageAlt ?? post.data.title } : undefined;
 ---
-<Base title={post.data.title} description={post.data.description} noindex={post.data.draft}>
+<Base title={post.data.seoTitle ?? post.data.title} description={post.data.seoDescription ?? post.data.description} noindex={post.data.draft} image={image} article={{ published: post.data.date.toISOString(), modified: post.data.updated?.toISOString(), tags: post.data.tags }}>
   <article class="article">
     <a class="back-link" href="/">← 모든 기록</a>
     <header class="article-header"><div class="post-meta"><span>{post.data.category}</span><time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>{post.data.draft && <span>초안 · 미리보기</span>}</div><h1>{post.data.title}</h1><p class="article-description">{post.data.description}</p><div class="tags">{post.data.tags.map(tag => <span>#{tag}</span>)}</div></header>
