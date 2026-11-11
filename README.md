@@ -110,3 +110,14 @@ release-0.1.0 운영 배포 완료. 유효한 Let's Encrypt HTTPS 인증서와 �
 홈·소개·RSS·사이트맵·health 정상, 초안·검증 페이지 404. 기존 home201.com 정상 유지.
 실제 글은 아직 0건이며 운영 댓글 작성 검증은 첫 글 발행 후 진행한다.
 검증 기록은 infra의 verification/steven-log-2026-11-11/에 있다.
+
+## 로고·파비콘 (2026-11-11)
+
+- 기존 하늘색 팔레트를 유지한 `s.` 모노그램. 글꼴 의존성 없는 SVG 도형을 원본으로 사용한다.
+- 단순한 실루엣·굵은 획·충분한 여백·단색 대비로 16px에서도 읽히게 설계한다. 헤더에도 동일 마크를 사용한다.
+- `public/favicon.svg` 수정 후 `node scripts/generate-brand.mjs`로 PNG96, ICO(16/32/48/96), Apple180, 아이콘192/512, OG1200×630을 재생성한다.
+- 네이버 권장에 따라 절대 URL과 rel별 단일 선언을 유지한다. shortcut icon=ICO, icon=PNG96, apple-touch-icon=PNG180.
+- Google은 정사각형·48px 초과 권장, 네이버는 최소16/권장32px 이상. 안정적인 파일 URL을 유지하고 robots에서 수집을 허용한다.
+- 홈·소개는 기본 OG 이미지, 글은 기존 개별 대표 이미지를 사용한다. OG 설정은 검색 썸네일 노출을 보장하지 않는다.
+- 배포 뒤 Search Console에서 홈 URL 재색인을 요청할 수 있다. 파비콘은 재수집 후 수일~수주 걸릴 수 있고 검색 노출 여부는 각 엔진이 결정한다.
+- 공식 규격: https://developers.google.com/search/docs/appearance/favicon-in-search · https://searchadvisor.naver.com/guide/markup-favicon

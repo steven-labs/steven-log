@@ -5,7 +5,10 @@ interface Props {
   article?: { published: string; modified?: string; tags: string[] };
   image?: { url: string; width: number; height: number; alt: string };
 }
-const { title, description = 'AI에 대한 생각과 소프트웨어를 만드는 과정의 기록.', noindex = false, article, image } = Astro.props;
+const { title, description = 'AI에 대한 생각과 소프트웨어를 만드는 과정의 기록.', noindex = false, article, image = {
+  url: new URL('/social-default.png', Astro.site).href,
+  width: 1200, height: 630, alt: 'Steven Log — AI와 소프트웨어 개발 기록',
+} } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const fullTitle = title ? `${title} · Steven Log` : 'Steven Log · 생각을 기록하고, 더 나은 것을 만듭니다';
 const author = { '@type': 'Person', name: 'Steven Lee', url: new URL('/about/', Astro.site).href };
@@ -27,7 +30,12 @@ const jsonLd = JSON.stringify(structuredData).replace(/</g, '\\u003c');
   <head>
     <meta charset="UTF-8" /><meta name="viewport" content="width=device-width" />
     <title>{fullTitle}</title><meta name="description" content={description} />
-    <link rel="canonical" href={canonical} /><link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={canonical} />
+    <link rel="shortcut icon" type="image/x-icon" href={new URL('/favicon.ico', Astro.site)} />
+    <link rel="icon" type="image/png" sizes="96x96" href={new URL('/favicon.png', Astro.site)} />
+    <link rel="apple-touch-icon" sizes="180x180" href={new URL('/apple-touch-icon.png', Astro.site)} />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#e0f2fe" />
     <link rel="alternate" type="application/rss+xml" title="Steven Log" href="/rss.xml" />
     <meta property="og:title" content={fullTitle} /><meta property="og:description" content={description} />
     <meta property="og:type" content={article ? 'article' : 'website'} /><meta property="og:url" content={canonical} />
@@ -43,7 +51,7 @@ const jsonLd = JSON.stringify(structuredData).replace(/</g, '\\u003c');
   <body>
     <a class="skip" href="#main">본문으로 건너뛰기</a>
     <header class="site-header wrap">
-      <a class="brand" href="/" aria-label="Steven Log 홈"><span class="brand-mark" aria-hidden="true">s.</span> Steven Log<span class="brand-dot">.</span></a>
+      <a class="brand" href="/" aria-label="Steven Log 홈"><img class="brand-mark" src="/favicon.svg" width="36" height="36" alt="" aria-hidden="true" /> Steven Log<span class="brand-dot">.</span></a>
       <nav aria-label="주 메뉴"><a href="/" aria-current={Astro.url.pathname === '/' ? 'page' : undefined}>글</a><a href="/about/" aria-current={Astro.url.pathname === '/about/' ? 'page' : undefined}>소개</a><a href="/rss.xml">RSS ↗</a></nav>
     </header>
     <main id="main" class="wrap"><slot /></main>
