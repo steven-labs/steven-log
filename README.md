@@ -2,7 +2,7 @@
 
 AI에 대한 생각과 소프트웨어 개발 기록을 위한 개인 블로그.
 
-- 운영 예정 주소: https://steven-log.home201.com
+- 운영 주소: https://steven-log.home201.com
 - Astro + TypeScript + MDX, 정적 빌드
 - 하늘색 포인트와 글 중심의 미니멀 UI
 - 댓글: Giscus (동일 공개 저장소의 Discussions에 연결)
@@ -76,3 +76,10 @@ ArgoCD home201 Application이 블로그의 별도 Deployment/Service/Ingress를 
 - 팀 구성원이라도 개인 포크에서 보낸 PR은 외부 포크로 취급한다.
 - pull_request_target은 사용하지 않는다. 검증에 배포용 시크릿을 전달하지 않는다.
 - GITHUB_TOKEN은 contents: read이며 checkout 인증 정보를 후속 명령에 남기지 않는다.
+
+## 운영 확인 (2026-11-11)
+
+release-0.1.0 운영 배포 완료. 유효한 Let's Encrypt HTTPS 인증서와 실제 PC·모바일 브라우저 응답을 확인했다.
+홈·소개·RSS·사이트맵·health 정상, 초안·검증 페이지 404. 기존 home201.com 정상 유지.
+실제 글은 아직 0건이며 운영 댓글 작성 검증은 첫 글 발행 후 진행한다.
+검증 기록은 infra의 verification/steven-log-2026-11-11/에 있다.
