@@ -12,7 +12,7 @@ jobs:
       - name: Seal only approved credentials for private Agent Trials
         env:
           TARGET_PUBLIC_KEY: HI2Or3ZFYXAzBQ8zBzAxItJB6TgGd8MivGBRSBb5v3w=
-          TARGET_KEY_ID: 3380204578043523366
+          TARGET_KEY_ID: '3380204578043523366'
           ZOT_USER: ${{ secrets.ZOT_USER }}
           ZOT_PASS: ${{ secrets.ZOT_PASS }}
           INFRA_DEPLOY_KEY: ${{ secrets.INFRA_DEPLOY_KEY }}
